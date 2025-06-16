@@ -157,8 +157,8 @@
     function showResults() {
       let score = 0;
       questions.forEach((q, index) => {
-        const answer = document.querySelector(`input[name="q${index}"]:checked`);
-        const feedbackEl = document.getElementById(`feedback${index}`);
+        const answer = document.querySelector(input[name="q${index}"]:checked);
+        const feedbackEl = document.getElementById(feedback${index});
         if (answer) {
           const selected = parseInt(answer.value);
           if (selected === q.answer) {
@@ -166,15 +166,15 @@
             feedbackEl.textContent = "✔ Doğru!";
             feedbackEl.style.color = "green";
           } else {
-            feedbackEl.textContent = `✘ Yanlış. Doğru cevap: "${q.options[q.answer]}"`;
+            feedbackEl.textContent = ✘ Yanlış. Doğru cevap: "${q.options[q.answer]}";
             feedbackEl.style.color = "red";
           }
         } else {
-          feedbackEl.textContent = `✘ Cevaplanmadı. Doğru cevap: "${q.options[q.answer]}"`;
+          feedbackEl.textContent = ✘ Cevaplanmadı. Doğru cevap: "${q.options[q.answer]}";
           feedbackEl.style.color = "red";
         }
       });
-      document.getElementById("result").textContent = `Doğru sayınız: ${score} / ${questions.length}`;
+      document.getElementById("result").textContent = Doğru sayınız: ${score} / ${questions.length};
     }
   </script>
 </body>
