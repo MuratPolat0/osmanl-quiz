@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Osmanlı'da Demokratikleşme - İnteraktif Quiz</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
-    .quiz-container { background: #fff; padding: 20px; border-radius: 10px; max-width: 800px; margin: auto; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .question { font-weight: bold; margin-top: 20px; }
-    .options { margin-bottom: 15px; }
-    .options label { display: block; margin: 5px 0; cursor: pointer; }
-    button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    .result { font-size: 18px; margin-top: 20px; font-weight: bold; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    .quiz-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .options {
+      margin-bottom: 5px;
+    }
+    .options label {
+      display: block;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .feedback {
+      font-style: italic;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
   <div class="quiz-container">
-    <h2>Osmanlı'da Demokratikleşme ve 20. Yüzyıl Olayları - Quiz</h2>
+    <h2>Osmanlı'da Demokratikleşme ve 20. Yüzyıl Olayları - Quiz Murat Polat</h2>
     <form id="quizForm">
       <!-- Sorular buraya gelecek -->
     </form>
@@ -52,9 +88,9 @@
         answer: 2
       },
       {
-        q: "II. Meşrutiyet hangi yıl ilan edilmiştir?",
-        options: ["1839", "1876", "1856", "1908", "1912"],
-        answer: 3
+        q: "Çöl Kaplanı ismiyle anılan komutan kimdir?",
+        options: ["Mustafa Kemal Paşa", "Rauf Orbay", "Enver Paşa", "Halil Kut", "Fahrettin Paşa"],
+        answer: 4
       },
       {
         q: "Osmanlı’da ilk anayasa hangi gelişme ile gelmiştir?",
@@ -79,7 +115,7 @@
       {
         q: "31 Mart Vakası’nda ön plana çıkan kişi kimdir?",
         options: ["Enver Paşa", "Talat Paşa", "Mustafa Kemal", "Ali Fethi Bey", "Rauf Orbay"],
-        answer: 2
+        answer: 1
       },
       {
         q: "Trablusgarp Savaşı’nın çıkış nedeni nedir?",
@@ -94,7 +130,7 @@
       {
         q: "Osmanlı üç kıtada toprak özelliğini ne zaman kaybetti?",
         options: ["Kırım Savaşı", "Balkan Savaşı", "Trablusgarp Savaşı", "I. Dünya Savaşı", "93 Harbi"],
-        answer: 2
+        answer: 1
       },
       {
         q: "Mondros Ateşkes Antlaşması’nda 7. madde neyi ifade eder?",
@@ -103,16 +139,8 @@
       }
     ];
 
-    function showResults() {
-      let score = 0;
-      questions.forEach((q, index) => {
-        const answer = document.querySelector(`input[name="q${index}"]:checked`);
-        if (answer && parseInt(answer.value) === q.answer) score++;
-      });
-      document.getElementById("result").textContent = `Doğru sayınız: ${score} / ${questions.length}`;
-    }
-
     const form = document.getElementById("quizForm");
+
     questions.forEach((q, i) => {
       const questionHTML = `
         <div class="question">${i + 1}. ${q.q}</div>
@@ -121,9 +149,33 @@
             <label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>
           `).join('')}
         </div>
+        <div class="feedback" id="feedback${i}"></div>
       `;
       form.insertAdjacentHTML("beforeend", questionHTML);
     });
+
+    function showResults() {
+      let score = 0;
+      questions.forEach((q, index) => {
+        const answer = document.querySelector(`input[name="q${index}"]:checked`);
+        const feedbackEl = document.getElementById(`feedback${index}`);
+        if (answer) {
+          const selected = parseInt(answer.value);
+          if (selected === q.answer) {
+            score++;
+            feedbackEl.textContent = "✔ Doğru!";
+            feedbackEl.style.color = "green";
+          } else {
+            feedbackEl.textContent = `✘ Yanlış. Doğru cevap: "${q.options[q.answer]}"`;
+            feedbackEl.style.color = "red";
+          }
+        } else {
+          feedbackEl.textContent = `✘ Cevaplanmadı. Doğru cevap: "${q.options[q.answer]}"`;
+          feedbackEl.style.color = "red";
+        }
+      });
+      document.getElementById("result").textContent = `Doğru sayınız: ${score} / ${questions.length}`;
+    }
   </script>
 </body>
 </html>
